@@ -3,9 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const movieTitle = document.getElementById("movieTitle");
   const movieRuntime = document.getElementById("movieRuntime");
   const movieShowtime = document.getElementById("movieShowtime");
-  const movieAvailableTickets = document.getElementById(
-    "movieAvailableTickets"
-  );
+  const movieAvailableTickets = document.getElementById( "movieAvailableTickets");
   const buyTicketBtn = document.getElementById("buyTicketbtn");
   const filmList = document.getElementById("films");
 
@@ -23,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((error) => console.error(error));
 
-  //Fetch movie data from API or jso and populates film list on page load
+  //Fetch movie data from API or json and populates film list on page load
   fetch("http://localhost:3000/films")
     .then((response) => response.json())
     .then((movies) => {
@@ -33,9 +31,9 @@ document.addEventListener("DOMContentLoaded", () => {
       movies.forEach((movie) => {
         const filmItem = document.createElement("li");
         filmItem.classList.add("filmItem");
-        filmItem.innerText = mpovie.title;
+        filmItem.innerText = movie.title;
 
-        // Add eben listener to li elemt to populate movie details and when clicked
+        // Add event listener to li elementt to populate movie details and when clicked
         filmItem.addEventListener("click", () => {
           fetch(`http://localhost:3000/films/${movie.id}`)
             .then((response) => response.json())
