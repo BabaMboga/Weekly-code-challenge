@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded",() => {
     const movieRuntime = document.getElementById("movieRuntime");
     const movieShowtime = document.getElementById("movieShowtime");
     const movieAvailableTickets = document.getElementById("movieAvailableTickets");
-    const buyTicketsBtn = document.getElementById("buyTicketbtn");
+    const buyTicketBtn = document.getElementById("buyTicketbtn");
     const filmList = document.getElementById("films");
     
     //We fetch the movie data from API and populates first movie details on page load
@@ -34,6 +34,42 @@ document.addEventListener("DOMContentLoaded",() => {
         const filmItem = document.createElement("li");
         filmItem.classList.add("filmItem");
         filmItem.innerText = mpovie.title;
-     })
+    
+    // Add eben listener to li elemt to populate movie details and when clicked
+        filmItem.addEventListener('click',() =>{
+            moviePoster.src = movie.poster;
+            movieTitle.innerText = movie.title;
+            movieRuntime.innerText = `Runtime: ${movie.runtime} minutes`;
+          movieShowtime.innerText = `Showtime: ${movie.showtime}`;
+          const availableTickets = movie.capacity - movie.tickets_sold;
+          movieAvailableTickets.innerText = `Available Tickets: ${availableTickets}`;
+
+          // Disable buy ticket button if no available tickets
+          buyTicketBtn.disabled = availableTickets <= 0;
+        });
+
+        filmList.appendChild(filmItem);
+
+     });
     })
-})
+    .catch(error => console.log(error));
+
+    //Add event listener to buy ticket button
+    buyTicketBtn.addEventListener("click", () => {
+    // get current available tickes from moive details
+    const currentAvailableTickets = parseInt(movieAvailableTickets.innerText.split(" ")[2]);
+    if(currentAvailableTickets > 0){
+        //update available tickets on frontend and API
+        const updatedAvailableTickets = currentAvailableTickets - 1;
+        movieAvailableTickets.innerText = `Available Tickets: ${updatedAvailableTickets}`;
+        fetch('http://localhost:3000/films',{
+            method: "PATCH",
+            headers: {"Content-Type": "application/json"
+        },
+        body: JSON.stringify({tickets_sold: movie.capacity - updatedAvailableTickets})
+        })
+        .then(response => response.json())
+        .catch(error => console.error(error));
+    }
+    });
+});
