@@ -9,17 +9,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //We fetch the movie data from API and populates first movie details on page load
 
-  fetch("http://localhost:3000/films")
-    .then((response) => response.json())
-    .then((movie) => {
-      moviePoster.src = movie.poster;
-      movieTitle.innerText = movie.title;
-      movieRuntime.innerText = `Runtime: ${movie.runtime} minutes`;
-      movieShowtime.innerText = `Showtime: ${movie.showtime} minutes`;
-      const availableTickets = movie.capacity - movie.tickets_sold;
-      movieAvailableTickets.innerText = `Available Tickets: ${availableTickets}`;
-    })
-    .catch((error) => console.error(error));
+  // fetch("http://localhost:3000/films")
+  //   .then((response) => response.json())
+  //   .then((movie) => {
+  //     console.log(movie);
+  //     moviePoster.src = movie.poster;
+  //     movieTitle.innerText = movie.title;
+  //     movieRuntime.innerText = `Runtime: ${movie.runtime} minutes`;
+  //     movieShowtime.innerText = `Showtime: ${movie.showtime} minutes`;
+  //     const availableTickets = movie.capacity - movie.tickets_sold;
+  //     movieAvailableTickets.innerText = `Available Tickets: ${availableTickets}`;
+  //   })
+  //   .catch((error) => console.error(error));
 
   //Fetch movie data from API or json and populates film list on page load
   fetch("http://localhost:3000/films")
@@ -27,13 +28,28 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((movies) => {
       // clear placeholder li element from the fllm list
       filmList.innerHTML = "";
-      //Loop through make movies and create li elemwnt for each one
+      //Loop through make movies and create li element for each one
       movies.forEach((movie) => {
-        const filmItem = document.createElement("li");
-        filmItem.classList.add("filmItem");
-        filmItem.innerText = movie.title;
+              // console.log(movie);
+      const filmItem = document.createElement("li");
+      filmItem.classList.add("film", "item");
+      filmItem.innerText = movie.title;
+      moviePoster.src = movie.poster;
+      movieTitle.innerText = movie.title;
+      movieRuntime.innerText = `Runtime: ${movie.runtime} minutes`;
+      movieShowtime.innerText = `Showtime: ${movie.showtime} minutes`;
+      const availableTickets = movie.capacity - movie.tickets_sold;
+      movieAvailableTickets.innerText = `Available Tickets: ${availableTickets}`;
+      
+       filmItem.innerHTML = movie.title;
+        filmList.innerHTML = `
+        <h2>${movie.title}</h2>
+        <img src="${moviePoster.src}">
+        <p>Tickets: ${availableTickets}</p>
+       
+      `;
 
-        // Add event listener to li elementt to populate movie details and when clicked
+        // Add event listener to li element to populate movie details and when clicked
         filmItem.addEventListener("click", () => {
           fetch(`http://localhost:3000/films/${movie.id}`)
             .then((response) => response.json())
