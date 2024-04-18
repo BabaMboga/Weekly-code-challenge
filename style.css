@@ -39,6 +39,10 @@ nav ul li a {
 .movieContainer {
   display: flex;
   margin-top: 50px;
+  justify-content: center;
+  align-items: flext-start;
+  border: 2px solid #333;
+  padding: 20px;
 }
 
 .movieContainer img {
@@ -93,6 +97,9 @@ nav ul li a {
 
 #films {
   list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .filmItem {
@@ -100,6 +107,9 @@ nav ul li a {
   margin-bottom: 10px;
   padding: 10px;
   border: 1px solid #333;
+  width: calc(33.33% - 20px);
+  max-width: 300px;
+  text-align: center;
 }
 
 .container {
@@ -107,4 +117,10 @@ nav ul li a {
   flex-direction: column;
   align-items: center;
   text-align: center;
+}
+
+.filmItem img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
 }
