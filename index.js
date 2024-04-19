@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const filmList = document.getElementById("films");
 
   // Fetch movie data from API or JSON and populate film list on page load
-  fetch("http://localhost:3000/films")
+  fetch("https://pseudo-data.onrender.com/films")
     .then((response) => response.json())
     .then((movies) => {
       // Clear placeholder li element from the film list
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Add event listener to li element to populate movie details when clicked
         filmItem.addEventListener("click", () => {
-          fetch(`http://localhost:3000/films/${movie.id}`)
+          fetch(`https://pseudo-data.onrender.com/films/${movie.id}`)
             .then((response) => response.json())
             .then((newMovie) => {
               moviePoster.src = newMovie.poster;
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Update available tickets on frontend and API
       const updatedAvailableTickets = currentAvailableTickets - 1;
       movieAvailableTickets.innerText = `Available Tickets: ${updatedAvailableTickets}`;
-      fetch(`http://localhost:3000/films/${filmList.querySelector("li.active").dataset.movie.Id}`, {
+      fetch(`https://pseudo-data.onrender.com/films/${filmList.querySelector("li.active").dataset.movie.Id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ tickets_sold: movieCapacity - updatedAvailableTickets })
